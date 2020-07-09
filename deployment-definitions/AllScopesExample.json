@@ -8,9 +8,9 @@
     {
         "Order": 10,
         "TemplateFile": "arm-templates\\PolicySetAssignment\\AllowedLocationsAssignment.json",
-        "TemplateParameterFile": "arm-templates\\PolicySetAssignment\\AllowedLocationsAssignment.Parameters.json",
+        "TemplateParameterFile": "arm-templates\\PolicySetAssignment\\AllowedLocationsAssignment.Enforce.Parameters.Local.json",
         "TenantId": "{Replace-With-Tenant-Id}",
-        "SubscriptionId": "{Replace-With-Sub-Id}"
+        "ManagementGroupId": "{Replace-With-Tenant-Id}"
     },
     {
         "Order": 20,
