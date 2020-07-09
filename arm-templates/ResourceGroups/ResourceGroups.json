@@ -1,0 +1,37 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "apiProfile": "2019-04-01",
+    "parameters": {
+        "resourceGroups": {
+            "type": "array",
+            "metadata": {
+                "description": "Resource groups definition"
+            }
+        }
+    },
+    "variables": {
+    },
+    "functions": [
+    ],
+    "resources": [
+        {
+            "type": "Microsoft.Resources/resourceGroups",
+            "apiVersion": "2019-10-01",
+
+            "name": "[parameters('resourceGroups')[copyIndex('rgCopy')].name]",
+            "location": "[parameters('resourceGroups')[copyIndex('rgCopy')].location]",
+            "tags": "[parameters('resourceGroups')[copyIndex('rgCopy')].tags]",
+
+            "properties": {
+            },
+
+            "copy": {
+                "name": "rgCopy",
+                "count": "[length(parameters('resourceGroups'))]"
+            }
+        }
+    ],
+    "outputs": {
+    }
+}
