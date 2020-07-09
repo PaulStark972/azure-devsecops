@@ -1,0 +1,29 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "publicIPs": {
+            "type": "array"
+        }
+    },
+    "resources": [
+        {
+            "name": "[parameters('publicIPs')[copyIndex('pipcopy')].name]",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2019-09-01",
+            "location": "[resourceGroup().location]",
+            "tags": {
+            },
+            "sku": {
+                "name": "[parameters('publicIPs')[copyIndex('pipcopy')].addressSku]"
+            },
+            "properties": {
+                "publicIPAllocationMethod": "[parameters('publicIPs')[copyIndex('pipcopy')].allocationMethod]"
+            },
+            "copy": {
+                "name": "pipcopy",
+                "count": "[length(parameters('publicIPs'))]"
+            }
+        }
+    ]
+}
