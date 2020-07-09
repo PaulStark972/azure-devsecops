@@ -1,0 +1,15 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "value": "4444444-4444-4444-4444-4444444444444"
+        },
+        "displayName": {
+            "value": "Prod-Critical"
+        },
+        "parentId": {
+            "value": "/providers/Microsoft.Management/managementGroups/2222222-2222-2222-2222-2222222222222"
+        }
+    }
+}    

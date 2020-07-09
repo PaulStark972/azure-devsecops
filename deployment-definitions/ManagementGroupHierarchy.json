@@ -1,0 +1,26 @@
+[
+    {
+        "Order": 1,
+        "TenantId": "{Replace-With-Tenant-Id}",
+        "TemplateFile": "arm-templates\\ManagementGroups\\ManagementGroup.json",
+        "TemplateParameterFile": "arm-templates\\ManagementGroups\\ManagementGroup.Root.Parameters.json"
+    },
+    {
+        "Order": 2,
+        "TenantId": "{Replace-With-Tenant-Id}",
+        "TemplateFile": "arm-templates\\ManagementGroups\\ManagementGroup.json",
+        "TemplateParameterFile": "arm-templates\\ManagementGroups\\ManagementGroup.Prod.Parameters.json"
+    },
+    {
+        "Order": 3,
+        "TenantId": "{Replace-With-Tenant-Id}",
+        "TemplateFile": "arm-templates\\ManagementGroups\\ManagementGroup.json",
+        "TemplateParameterFile": "arm-templates\\ManagementGroups\\ManagementGroup.ProdCritical.Parameters.json"
+    },
+    {
+        "Order": 4,
+        "TenantId": "{Replace-With-Tenant-Id}",
+        "TemplateFile": "arm-templates\\ManagementGroups\\ManagementGroup.json",
+        "TemplateParameterFile": "arm-templates\\ManagementGroups\\ManagementGroup.NonProd.Parameters.json"
+    }
+]
