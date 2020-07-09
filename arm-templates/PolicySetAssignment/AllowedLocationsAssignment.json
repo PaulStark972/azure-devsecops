@@ -1,0 +1,102 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "string",
+            "defaultValue": "westeurope",
+            "metadata": {
+                "strongType": "location",
+                "description": "Assignment location."
+            }
+        },
+        "scope": {
+            "type": "string",
+            "metadata": {
+                "description": "The scope for the policy assignment."
+            }
+        },
+        "listOfAllowedLocations": {
+            "type": "array",
+            "defaultValue": [
+            ],
+            "metadata": {
+                "strongType": "location",
+                "description": "The locations that are allowed."
+            }
+        },
+        "notScopes": {
+            "type": "array",
+            "defaultValue": [
+            ],
+            "metadata": {
+                "description": "The scopes where the policy assignment will not apply."
+            }
+        },
+        "enforcementMode": {
+            "type": "string",
+            "allowedValues": [
+                "Default",
+                "DoNotEnforce"
+            ],
+            "defaultValue": "Default",
+            "metadata": {
+                "description": "The policy assignment enforcement mode."
+            }
+        }
+    },
+    "variables": {
+        "policysetName": "policyset-enforce-allowedlocations-001",
+        "policysetDisplayName": "Not allowed resource types",
+        "builtInAllowedLocationsPolicyId": "/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c"
+    },
+    "resources": [
+        {
+            "name": "[variables('policysetName')]",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "apiVersion": "2019-06-01",
+            "properties": {
+                "policyType": "Custom",
+                "metadata": {
+                    "category": "DevSecOpsCompanyLocations"
+                },
+                "displayName": "[variables('policysetDisplayName')]",
+                "description": "Resource Locations policies for DevSecOpsCompany",
+                "parameters": {
+                },
+                "policyDefinitions": [
+                    {
+                        "policyDefinitionId": "[variables('builtInAllowedLocationsPolicyId')]",
+                        "parameters": {
+                            "listOfAllowedLocations": {
+                                "value": "[parameters('listOfAllowedLocations')]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Authorization/policyAssignments",
+            "name": "[concat('pa-locations-',toLower(parameters('enforcementMode') ) ) ]",
+            "dependsOn": [
+                "[variables('policysetName')]"
+            ],
+            "condition": "[not(empty(parameters('listOfAllowedLocations')))]",
+            "apiVersion": "2019-06-01",
+            "properties": {
+                "scope": "[parameters('scope')]",
+                "notScopes": "[parameters('notScopes')]",
+                "policyDefinitionId": "[concat(parameters('scope'), resourceId('Microsoft.Authorization/policySetDefinitions', variables('policysetName')))]",
+                "enforcementMode": "[parameters('enforcementMode')]",
+                "displayName": "[concat('Enforce Not Allowed Resource Locations ', parameters('enforcementMode'))]",
+                "parameters": {
+                }
+            },
+            "location": "[parameters('location')]",
+            "identity": {
+                "type": "SystemAssigned"
+            }
+        }
+    ]
+}

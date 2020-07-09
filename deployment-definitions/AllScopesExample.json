@@ -1,0 +1,31 @@
+[
+    {
+        "Order": 0,
+        "TemplateFile": "arm-templates\\ManagementGroups\\ManagementGroup.json",
+        "TemplateParameterFile": "arm-templates\\ManagementGroups\\ManagementGroup.Root.Parameters.json",
+        "TenantId": "{Replace-With-Tenant-Id}"
+    },
+    {
+        "Order": 10,
+        "TemplateFile": "arm-templates\\PolicySetAssignment\\AllowedLocationsAssignment.json",
+        "TemplateParameterFile": "arm-templates\\PolicySetAssignment\\AllowedLocationsAssignment.Parameters.json",
+        "TenantId": "{Replace-With-Tenant-Id}",
+        "SubscriptionId": "{Replace-With-Sub-Id}"
+    },
+    {
+        "Order": 20,
+        "TemplateFile": "arm-templates\\ResourceGroups\\ResourceGroups.json",
+        "TemplateParameterFile": "arm-templates\\ResourceGroups\\ResourceGroups.Parameters.json",
+        "TenantId": "{Replace-With-Tenant-Id}",
+        "SubscriptionId": "{Replace-With-Sub-Id}"
+    },
+    {
+        "Order": 30,
+        "TemplateFile": "arm-templates\\PublicIp\\PublicIp.json",
+        "TemplateParameterFile": "arm-templates\\PublicIp\\PublicIp.Parameters.json",
+        "TenantId": "{Replace-With-Tenant-Id}",
+        "SubscriptionId": "{Replace-With-Sub-Id}",
+        "RgName": "rg-pip-westeurope-dev-01",
+        "Mode": "Incremental"
+    }
+]

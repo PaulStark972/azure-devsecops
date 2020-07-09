@@ -1,0 +1,67 @@
+
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "roleDefinitionId": {
+            "type": "string",
+            "metadata": {
+                "description": "The role definition ID used in the role assignment."
+            }
+        },
+        "principalId": {
+            "type": "string",
+            "metadata": {
+                "description": "The principal ID assigned to the role. This maps to the ID inside the Active Directory. It can point to a user, service principal, or security group."
+            }
+        },
+        "principalType": {
+            "type": "string",
+            "allowedValues": [
+                "",
+                "User",
+                "Group",
+                "ServicePrincipal",
+                "Unknown",
+                "DirectoryRoleTemplate",
+                "ForeignGroup",
+                "Application",
+                "MSI",
+                "DirectoryObjectOrGroup",
+                "Everyone"
+            ],
+            "metadata": {
+                "description": "The principal type of the assigned principal ID. - User, Group, ServicePrincipal, Unknown, DirectoryRoleTemplate, ForeignGroup, Application, MSI, DirectoryObjectOrGroup, Everyone"
+            },
+            "defaultValue": ""
+        },
+        "canDelegate": {
+            "type": "bool",
+            "metadata": {
+                "description": "The delegation flag used for creating a role assignment"
+            },
+            "defaultValue": true
+        }
+    },
+    "functions": [
+    ],
+    "variables": {
+        "assignmentName": "[guid(parameters('principalId'), parameters('roleDefinitionId'), string(parameters('canDelegate') ) )]",
+        "principalType": "[if(empty(parameters('principalType')), json('null'), parameters('principalType'))]"
+    },
+    "resources": [
+        {
+            "name": "[variables('assignmentName')]",
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2018-09-01-preview",
+            "properties": {
+                "roleDefinitionId": "[parameters('roleDefinitionId')]",
+                "principalId": "[parameters('principalId')]"
+                // "principalType": "[variables('principalType')]",
+                // "canDelegate": "[parameters('canDelegate')]"
+            }
+        }
+    ],
+    "outputs": {
+    }
+}
