@@ -18,14 +18,19 @@ steps:
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
 
+# - task: RunARMTTKTests@1
+#   inputs:
+#     templatelocation: '$(System.DefaultWorkingDirectory)\*'
+#     resultLocation: '$(System.ArtifactStagingDirectory)\ARM-TTK.XML'
+    
 - task: RunARMTTKTests@1
   inputs:
-    templatelocation: '$(System.DefaultWorkingDirectory)\*'
-    resultLocation: '$(System.ArtifactStagingDirectory)\ARM-TTK.XML'
-    
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
+    templatelocation: '$(System.DefaultWorkingDirectory)\ResourceGroups\arm-templates\*'
+    resultLocation: '$(System.DefaultWorkingDirectory)\ARM-TTK.XML'
+
+# - task: PublishBuildArtifacts@1
+#   inputs:
+#     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+#     ArtifactName: 'drop'
+#     publishLocation: 'Container'
 
