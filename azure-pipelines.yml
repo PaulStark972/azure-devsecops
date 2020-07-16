@@ -25,7 +25,7 @@ steps:
     
 - task: RunARMTTKTests@1
   inputs:
-    templatelocation: '$(System.DefaultWorkingDirectory)\ResourceGroups\arm-templates\*'
+    templatelocation: '$(System.DefaultWorkingDirectory)\arm-templates\ResourceGroups\arm-templates\*'
     resultLocation: '$(System.DefaultWorkingDirectory)\ARM-TTK.XML'
 
 # - task: PublishBuildArtifacts@1
