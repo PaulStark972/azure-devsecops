@@ -1,0 +1,76 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {},
+    "functions": [
+        {
+            "namespace": "nameValidation",
+            "members": {
+                "validateRgName": {
+                    "parameters": [
+                        {
+                            "name": "rgName",
+                            "type": "string"
+                        }
+                    ],
+                    "output": {
+                        "value": "[if(
+                                    equals(parameters('rgName'), toLower(parameters('rgName') ) ),
+                                    if(
+                                        equals(length(split(parameters('rgName'), '-') ), 5),
+                                        if(
+                                            equals(split(parameters('rgName'), '-')[0],'rg'),
+                                            if(
+                                                not(empty(split(parameters('rgName'), '-')[1])),
+                                                if(
+                                                    contains(createArray('dev','tst','prd'), split(parameters('rgName'), '-')[2]),
+                                                    if(
+                                                        contains(createArray('we','ne'), split(parameters('rgName'), '-')[3]),
+                                                        if(
+                                                            equals(length(split(parameters('rgName'), '-')[4]), 2),
+                                                            if(
+                                                                empty(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(split(parameters('rgName'),'-')[4],'0',''),'1',''),'2',''),'3',''),'4',''),'5',''),'6',''),'7',''),'8',''),'9','') ),
+                                                                'isValid',
+                                                                'hasNonNumericSuffix'
+                                                            ),
+                                                            'hasWrongSuffixLength'
+                                                        ),
+                                                        'hasWrongLocation'
+                                                    ),
+                                                    'hasWrongEnvironment'
+                                                ),
+                                                'hasNotWorkloadName'
+                                            ),
+                                            'hasWrongPrefix'
+                                        ),
+                                        'hasNotFourDashSeparators'
+                                    ),
+                                    'isNotLowercase')]",
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    ],
+    "variables": {
+        "rgNamesProper": "[createArray('rg-network-tst-we-01','rg-vm001-prd-ne-99')]",
+        "rgNamesWrong": "[createArray('RG-NAME-tst-WE-01','rgname-dev-ne-11','rgtest','rg-a-b-a-001', 'rg---','gr-name-tst-ne-99')]"
+    },
+    "resources": [],
+    "outputs": {
+        "rgNamesProperValidationOutputs": {
+            "type": "array",
+            "copy": {
+                "count": "[length(variables('rgNamesProper'))]",
+                "input": "[nameValidation.validateRgName(variables('rgNamesProper')[copyIndex()])]"
+            }
+        },
+        "rgNamesWrongValidationOutputs": {
+            "type": "array",
+            "copy": {
+                "count": "[length(variables('rgNamesWrong'))]",
+                "input": "[nameValidation.validateRgName(variables('rgNamesWrong')[copyIndex()])]"
+            }
+        }
+    }
+}
