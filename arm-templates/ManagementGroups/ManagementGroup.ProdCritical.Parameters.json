@@ -9,7 +9,7 @@
             "value": "Prod-Critical"
         },
         "parentId": {
-            "value": "/providers/Microsoft.Management/managementGroups/2222222-2222-2222-2222-2222222222222"
+            "value": "/providers/Microsoft.Management/managementGroups/11111"
         }
     }
 }    
